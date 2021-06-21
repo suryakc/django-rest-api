@@ -1,19 +1,22 @@
-from os import name
-from typing import ContextManager
+""" Models for our Blog """
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Category(models.Model):
+    """ Category definition """
     name = models.CharField(max_length=100)
+    objects = models.Manager()
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class Post(models.Model):
-
-    class PostObjects(models.Manager):
+    """ Blog Post definition """
+    class PostObjects(models.Manager): # pylint: disable=too-few-public-methods
+        """ object collection for published posts """
         def get_queryset(self):
+            """ get filtered posts (published) """
             return super().get_queryset().filter(status='published')
 
     options = (
@@ -33,8 +36,9 @@ class Post(models.Model):
     objects = models.Manager()
     postobjects = PostObjects()
 
-    class Meta:
+    class Meta: # pylint: disable=too-few-public-methods
+        """ Meta info"""
         ordering = ('-published',)
 
     def __str__(self) -> str:
-        return self.title   
+        return str(self.title)
