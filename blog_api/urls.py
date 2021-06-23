@@ -2,7 +2,7 @@
 from django.urls import path
 from .views import PostList, PostDetail
 
-APP_NAME = 'blog_api'
+app_name = 'blog_api' # pylint: disable=invalid-name
 
 urlpatterns = [
     path('<int:pk>/', PostDetail.as_view(), name='detailcreate'),
